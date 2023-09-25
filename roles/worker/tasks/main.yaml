@@ -1,0 +1,9 @@
+---
+  - name: Debug
+    ansible.builtin.debug:
+      msg: "{{ hostvars['control'].join_cluster }}"
+  
+  - name: Associar Workers no Cluster
+    ansible.builtin.shell: "{{ hostvars['control'].join_cluster }}" 
+    register: node
+

@@ -36,7 +36,7 @@ Este projeto executa o seguinte.
 
 ## Faça o clone para sua estação
 ```
-git clone 
+git clone https://github.com/julianorib/ansible-kubernetes.git
 ```
 
 ## Execute o Playbook para instalação
