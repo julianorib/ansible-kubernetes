@@ -4,13 +4,17 @@
     - containerd
     - kubernetes
 
-- name: Configurar ControlPlane
+- name: Configurar Primeiro ControlPlane
+  hosts: master
+  roles:
+    - master
+
+- name: Configurar Demais ControlPlanes
   hosts: control
   roles:
     - control
 
-- name: Configurar Worker
+- name: Configurar Workers
   hosts: worker
   roles:
     - worker
-
