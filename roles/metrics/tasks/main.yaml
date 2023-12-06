@@ -1,0 +1,8 @@
+---
+  - name: Manifesto de configuracao
+    ansible.builtin.copy:
+      src: metrics.yaml
+      dest: /tmp/metrics.yaml
+
+  - name: Executar manifesto
+    ansible.builtin.shell: kubectl apply -f /tmp/metrics.yaml

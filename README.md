@@ -61,3 +61,19 @@ export KUBECONFIG="${KUBECONFIG}:./config
 kubectl get nodes
 ```
 
+# Extras
+
+- Metrics
+- Metallb
+- Nfs-provisioner
+- Traefik
+
+Se desejar instalar os itens extras acima no seu Cluster, altere as variáveis necessárias em algumas roles:
+
+- roles\metallb\vars\main.yaml
+- roles\nfs\vars\main.yaml
+
+Em seguida, execute o playbook:
+```
+ansible-playbook -i hosts.cfg -u ubuntu --private-key suachave extras.yaml -b
+```

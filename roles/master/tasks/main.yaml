@@ -3,7 +3,7 @@
     ansible.builtin.shell: sudo kubeadm config images pull
 
   - name: Inicializar o Cluster
-    ansible.builtin.shell: kubeadm init --ignore-preflight-errors=NumCPU --control-plane-endpoint "{{ controlplaneendpoint }}:6443" --upload-certs --apiserver-cert-extra-sans={{ ansible_host}} --pod-network-cidr=10.244.0.0/16
+    ansible.builtin.shell: kubeadm init --ignore-preflight-errors=NumCPU --control-plane-endpoint "{{ controlplaneendpoint }}:6443" --upload-certs --apiserver-cert-extra-sans={{ ansible_host}} --pod-network-cidr={{ podnetworkcidr }}
     register: token
 
   - name: Tratar o Token CP
@@ -14,12 +14,12 @@
     ansible.builtin.shell: echo "{{ token.stdout_lines[-2] | regex_replace('\t') }}{{ token.stdout_lines[-1] | regex_replace('\t')}}" | tr -d "'\\\'"
     register: tokenw
 
-  - name: Exportar TOKEN JOIN para CP
+  - name: Exportar JOIN para CP
     ansible.builtin.add_host:
       name: tempcp
       join_clustercp: "{{ tokencp.stdout_lines[0] }}"  
  
-  - name: Exportar TOKEN JOIN para Nodes
+  - name: Exportar JOIN para Nodes
     ansible.builtin.add_host:
       name: temp
       join_cluster: "{{ tokenw.stdout_lines[0] }}"
@@ -39,5 +39,3 @@
   - name: Copiar Kubeconfig para localhost
     ansible.builtin.shell: echo "{{ kubeconfig.stdout }}" > ./config
     delegate_to: localhost
-
-

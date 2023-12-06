@@ -1,0 +1,18 @@
+---
+  - name: Executar manifesto Metallb
+    ansible.builtin.shell: kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml 
+
+  - name: Manifesto de configuracao
+    ansible.builtin.copy:
+      src: metallb.yaml
+      dest: /tmp/metallb.yaml
+
+  - name: Configurar Range de IPs
+    ansible.builtin.lineinfile:
+      state: present
+      dest: /tmp/metallb.yaml
+      regex: "^  - 172.19.255.200-172.19.255.250"
+      line: "  - {{ rangeips }}"
+
+  - name: Executar manifesto
+    ansible.builtin.shell: kubectl apply -f /tmp/metallb.yaml

@@ -1,0 +1,20 @@
+- name: Configurar Metallb 
+  hosts: master
+  roles:
+    - metallb
+
+- name: Configurar Nfs-subdir-external-provider
+  hosts: master
+  roles:
+    - nfs
+
+- name: Configurar Metrics Server
+  hosts: master
+  roles:
+    - metrics
+
+- name: Configurar Traefik 
+  hosts: master
+  roles:
+    - traefik
+

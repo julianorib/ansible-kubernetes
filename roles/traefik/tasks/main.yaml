@@ -1,0 +1,7 @@
+---
+  - name: Adicionar repositorio do Helm
+    ansible.builtin.shell: helm repo add traefik https://traefik.github.io/charts 
+
+  - name: Instalar Traefik com Helm
+    ansible.builtin.shell: helm upgrade --install traefik traefik/traefik --create-namespace -n traefik
+
