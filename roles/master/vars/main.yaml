@@ -1,3 +1,0 @@
-controlplaneendpoint: kubernetes.dev.unicoob.local
-podnetworkcidr: 10.135.100.0/22
-
