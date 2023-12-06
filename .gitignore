@@ -1,2 +1,2 @@
 config
-roles/*/vars/*
+roles/*/vars/main.yaml
