@@ -14,5 +14,8 @@
       regex: "^  - 172.19.255.200-172.19.255.250"
       line: "  - {{ rangeips }}"
 
+  - name: Aguardar o status de Running dos objetos criados
+    ansible.builtin.shell: kubectl wait --namespace metallb-system --for=condition=ready pod --selector=app=metallb --timeout=90s
+
   - name: Executar manifesto
     ansible.builtin.shell: kubectl apply -f /tmp/metallb.yaml
