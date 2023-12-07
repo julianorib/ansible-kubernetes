@@ -29,8 +29,20 @@
       mkdir -p /root/.kube
       cp /etc/kubernetes/admin.conf /root/.kube/config  
 
-  - name: Configuracao do CNI
-    ansible.builtin.shell: kubectl apply -f "https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml"
+  - name: Copiar manifesto flannel CNI cluster network interface
+    ansible.builtin.copy:
+      src: flannel.yaml
+      dest: /tmp/flannel.yaml
+
+  - name: Configurar Network CIDR utilizado no Cluster para o manifesto Flannel
+    ansible.builtin.lineinfile:
+      state: present
+      dest: /tmp/flannel.yaml
+      regex: '      "Network": "10.244.0.0/16",'
+      line: '      "Network": "{{ podnetworkcidr }}",'
+
+  - name: Aplicação do manifesto Flannel
+    ansible.builtin.shell: kubectl apply -f /tmp/flannel.yaml
 
   - name: Visualizar Kubeconfig remoto
     ansible.builtin.shell: cat /etc/kubernetes/admin.conf
