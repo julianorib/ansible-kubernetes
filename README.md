@@ -1,6 +1,6 @@
 # Configurando um Cluster Kubernetes com Ansible
 
-Este projeto cria um Cluster Kubernetes em um conjunto de Hosts com Ubuntu Linux.
+Este projeto cria um Cluster Kubernetes em um conjunto de Hosts com Linux Debian e derivados ou RedHat e derivados.
 <br>
 Pode ser utilizado com qualquer provider.
 <br>
@@ -28,6 +28,7 @@ Este projeto executa o seguinte.
 
 - Instala o Kubeadm, Kubectl, Kubelet em todos os hosts
 - Configura os requisitos de Kubernetes em todos os hosts
+- Instala o Helm
 - Reinicia todos os Hosts.
 
 - Inicia/Cria um Cluster
@@ -46,7 +47,7 @@ git clone https://github.com/julianorib/ansible-kubernetes.git
 ## Execute o Playbook para instalação
 
 ```
-ansible-playbook -i hosts.cfg -u ubuntu --private-key suachave playbook.yaml -b
+ansible-playbook -i hosts.cfg -u user --private-key suachave playbook.yaml -b
 ```
 
 ## Validando

@@ -1,3 +1,2 @@
 controlplaneendpoint: localhost.localdomain
-podnetworkcidr: 10.135.100.0/22
-
+podnetworkcidr: 10.244.0.0/16

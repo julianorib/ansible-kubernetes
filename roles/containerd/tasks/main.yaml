@@ -1,21 +1,24 @@
 ---
-  - name: Adicionando Chave GPG do Docker ContainerD
+  - name: Adicionando Chave GPG do Docker ContainerD (DEBIAN e Derivados)
     ansible.builtin.apt_key:
       url: https://download.docker.com/linux/ubuntu/gpg
       state: present
       keyring: /etc/apt/keyrings/docker.gpg
+    when: (ansible_facts['os_family']) == "Debian"
 
-  - name: Verificando arquitetura
+  - name: Verificando arquitetura (DEBIAN e Derivados)
     ansible.builtin.shell: dpkg --print-architecture
     register: architecture
+    when: (ansible_facts['os_family']) == "Debian"
 
-  - name: Adicionando Repositorio do Docker ContainerD
+  - name: Adicionando Repositorio do Docker ContainerD (DEBIAN e Derivados)
     ansible.builtin.apt_repository:
       repo: "deb [arch={{ architecture.stdout }} signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
       state: present
       filename: docker
+    when: (ansible_facts['os_family']) == "Debian"
 
-  - name: Instalar Dependencias
+  - name: Instalar Dependencias (DEBIAN e Derivados)
     ansible.builtin.apt:
       name: 
         - vim
@@ -28,10 +31,25 @@
         - chrony
       state: present
       update_cache: yes
+    when: (ansible_facts['os_family']) == "Debian"
 
+  - name: Instalar Dependências (REDHAT e Derivados)
+    ansible.builtin.yum:
+      name: 
+        - yum-utils
+        - vim
+        - curl
+        - nfs-utils
+        - chrony
+      state: present
+    when: (ansible_facts['os_family']) == "RedHat"
+
+  - name: Adicionar Repositorio (REDHAT e Derivados)
+    ansible.builtin.shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    when: (ansible_facts['os_family']) == "RedHat"
 
   - name: Instalar Containerd
-    ansible.builtin.apt:
+    ansible.builtin.package:
       name: containerd.io
       state: present
       update_cache: yes

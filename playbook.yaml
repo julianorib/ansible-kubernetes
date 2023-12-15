@@ -1,3 +1,9 @@
+- name: Instalar Containerd e Kubernetes
+  hosts: all
+  roles:
+    - containerd
+    - kubernetes
+
 - name: Configurar Primeiro ControlPlane
   hosts: master
   roles:
