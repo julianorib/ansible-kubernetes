@@ -1,0 +1,7 @@
+---
+  - name: Adicionar repositorio helm
+    ansible.builtin.shell: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+  - name: Instalar o Prometheus-Stack
+    ansible.builtin.shell: |
+      helm upgrade --install monitoring prometheus-community/kube-prometheus-stack --create-namespace -n monitoring 

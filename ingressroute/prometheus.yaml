@@ -1,0 +1,31 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: prometheus-ingressroute
+  namespace: monitoring
+spec:
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`prometheus.seudominio.com.br`)
+    services:
+    - name: monitoring-kube-prometheus-prometheus
+      port: 9090
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: prometheus-ingressroute-tls
+  namespace: monitoring
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`k-prometheus.seudominio.com.br`)
+    services:
+    - name: monitoring-kube-prometheus-prometheus
+      port: 9090
+  tls:
+    secretName: seudominio-secret

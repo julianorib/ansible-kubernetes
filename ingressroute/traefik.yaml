@@ -1,0 +1,31 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-ingressroute
+  namespace: traefik
+spec:
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`traefik.seudominio.com.br`)
+    services:
+    - name: api@internal
+      kind: TraefikService
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-ingressroute-tls
+  namespace: traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`traefik.seudominio.com.br`)
+    services:
+    - name: api@internal
+      kind: TraefikService
+  tls:
+    secretName: seudominio-secret

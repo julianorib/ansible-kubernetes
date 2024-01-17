@@ -18,3 +18,7 @@
   roles:
     - traefik
 
+- name: Configurar Prometheus-Stack
+  hosts: master
+  roles:
+    - prometheus

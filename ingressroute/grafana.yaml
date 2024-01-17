@@ -1,0 +1,31 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana-ingressroute
+  namespace: monitoring
+spec:
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`grafana.seudominio.com.br`)
+    services:
+    - name: monitoring-grafana
+      port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana-ingressroute-tls
+  namespace: monitoring
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - kind: Rule
+    match: Host(`grafana.seudominio.com.br`)
+    services:
+    - name: monitoring-grafana
+      port: 80
+  tls:
+    secretName: seudominio-secret
