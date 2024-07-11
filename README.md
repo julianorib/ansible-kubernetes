@@ -14,6 +14,7 @@ O ideal é que se tenha ao menos 3 Hosts, sendo 1 para ControlPlane e 2 para Wor
     - Master: IP do 1o ou uníco Control Plane
     - Control: IP dos demais Control Plane (Não obrigatório)
     - Worker: IP dos Workers.
+- Preencha as variáveis values.yaml.
 - Tenha o ansible instalado (Linux)
 *O ansible só funciona no Linux ou no Windows via WSL.*
 
@@ -69,12 +70,7 @@ kubectl get nodes
 - Nfs-provisioner
 - Traefik
 
-Se desejar instalar os itens extras acima no seu Cluster, altere as variáveis necessárias em algumas roles:
-
-- roles\metallb\vars\main.yaml
-- roles\nfs\vars\main.yaml
-
-Em seguida, execute o playbook:
+Execute o playbook:
 ```
-ansible-playbook -i hosts.cfg -u ubuntu --private-key suachave extras.yaml -b
+ansible-playbook -i hosts.cfg -u ubuntu --private-key suachave extras.yaml --extra-vars "@values.yaml" -b -K
 ```

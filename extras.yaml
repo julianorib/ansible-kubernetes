@@ -6,7 +6,7 @@
 - name: Configurar Nfs-subdir-external-provider
   hosts: master
   roles:
-    - nfs
+    - nfsprovisioner
 
 - name: Configurar Metrics Server
   hosts: master
