@@ -6,5 +6,20 @@
     ansible.builtin.shell: helm repo update
 
   - name: Instalar Traefik com Helm
-    ansible.builtin.shell: helm upgrade --install traefik traefik/traefik --create-namespace -n traefik --version 27.0.2
+    ansible.builtin.shell: helm upgrade --install traefik traefik/traefik --create-namespace -n traefik --version 27.0.2  --set image.tag="2.11.5"
 
+  - name: Capturar IP do service LB Traefik
+    ansible.builtin.shell: kubectl get svc -n traefik -o jsonpath='{.items[0].status.loadBalancer.ingress[0]}' | cut -d '"' -f 4
+    register: traefikip
+
+  - name: Criar ingress Traefik
+    ansible.builtin.template:
+      src: ingressdefault.yaml
+      dest: ingress.yaml
+
+  - name: Aplicar ingress Traefik
+    ansible.builtin.shell: kubectl apply -f ingress.yaml -n traefik
+
+  - name: Mostrar IP do service LB Traefik
+    ansible.builtin.debug:
+      msg: "Crie o DNS {{ traefikdns }} com o IP {{ traefikip.stdout }}"
