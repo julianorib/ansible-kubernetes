@@ -45,10 +45,15 @@ Este projeto executa o seguinte.
 git clone https://github.com/julianorib/ansible-kubernetes.git
 ```
 
+## Ajuste os valores das Variávies
+```
+values.yaml
+```
+
 ## Execute o Playbook para instalação
 
 ```
-ansible-playbook -i hosts.cfg -u user --private-key suachave playbook.yaml -b
+ansible-playbook -i hosts.cfg -u user --private-key suachave playbook.yaml --extra-vars "@values.yaml" -b -K
 ```
 
 ## Validando
