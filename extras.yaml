@@ -18,7 +18,7 @@
   roles:
     - traefik
 
-- name: Configurar Prometheus-Stack
+- name: Configurar Monitoring
   hosts: master
   roles:
-    - prometheus
+    - monitoring
