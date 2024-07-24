@@ -1,5 +1,5 @@
 - name: Instalar Containerd e Kubernetes
-  hosts: all
+  hosts: kubernetes
   roles:
     - containerd
     - kubernetes
