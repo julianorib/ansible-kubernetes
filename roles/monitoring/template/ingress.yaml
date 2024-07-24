@@ -1,0 +1,29 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana-ingressroute
+  namespace: monitoring
+spec:
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`{{ grafanadns }}`)
+    services:
+    - name: grafana
+      port: 80
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: prometheus-ingressroute
+  namespace: monitoring
+spec:
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`{{ prometheusdns }}`)
+    services:
+    - name: prometheus-kube-prometheus-prometheus
+      port: 9090

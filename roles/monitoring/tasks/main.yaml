@@ -34,10 +34,18 @@
     shell: 'kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo'
     register: Passowrd
 
+  - name: Criar ingress 
+    ansible.builtin.template:
+      src: ingress.yaml
+      dest: ingress.yaml
+
+  - name: Aplicar ingress Traefik
+    ansible.builtin.shell: kubectl apply -f ingress.yaml -n monitoring
+
   - name: Observações finais
     debug: 
       msg: 
-        - "Execute kubectl -n monitoring port-forward svc/grafana 3000:80 ou crie um Ingressroute para acesso." 
+        - "Crie o DNS {{ prometheusdns }} e {{ grafanadns }} com o IP do Traefik"
         - "Usuário Grafana: admin / Senha do Grafana: {{ Passowrd.stdout }}"
         - "Adicione o Datasource do Prometheus apontado para http://prometheus-kube-prometheus-prometheus:9090"
         - "Adicione o Datasource do Loki apontado para http://loki-gateway/ com Headers: X-Scope-OrgId Value: 1"

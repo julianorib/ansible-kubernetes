@@ -4,3 +4,5 @@ rangeips: 172.19.255.200-172.19.255.250
 nfspath: /share
 nfsserver: 192.168.18.5
 traefikdns: traefik.domain
+prometheusdns: prometheus.domain
+grafanadns: grafana.domain
